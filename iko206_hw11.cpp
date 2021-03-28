@@ -7,7 +7,7 @@ You can use the constants RED and BLACK, instead of the ints 0 and 1, when appro
 */
 
 #include <iostream>
-#include <math.h> // for asserting height
+#include <cmath> // for asserting height
 #include <queue>
 
 using namespace std;
@@ -17,11 +17,6 @@ using namespace std;
 
 template <class T>
 class RBT;
-
-// swapColor swaps the color from red to black and vice versa
-int swapColor(int c) {
-    return (c==0)?1:0;
-}
 
 template <class T>
 class RBTNode {
@@ -39,8 +34,6 @@ public:
     friend class RBT<T>;
     void prettyPrint(int indent) const;
 
-    template <class T1>
-    friend void swapColor(RBTNode<T1> *);
     template <class T1>
     friend int getColor(RBTNode<T1> *);
 
@@ -67,22 +60,15 @@ void RBTNode<T>::prettyPrint(int indent) const {
     }
     int margin = indent * 2;
     for (int i = 0; i < margin; ++i) {
-        cout << '\t';
+        cout << "\t\t";
     }
     cout << "DATA: " << data << endl;
     for (int i = 0; i < margin; ++i) {
-        cout << '\t';
+        cout << "\t\t";
     }
     cout << "COLOR: " << (color == RED ? "RED" : "BLACK") << endl;
     if (left != nullptr) {
         left->prettyPrint(indent + 1);
-    }
-}
-
-template <class T>
-void swapColor(RBTNode<T> *node) {
-    if (node != nullptr) {
-        node->color = swapColor(node->color);
     }
 }
 
@@ -98,66 +84,121 @@ int getColor(RBTNode<T> *node) {
 template <class T>
 class RBT {
     RBTNode<T> *root;
-    void singleCCR(RBTNode<T> *&point);
-    void doubleCR(RBTNode<T> *&point);
-    void singleCR(RBTNode<T> *&point);
-    void doubleCCR(RBTNode<T> *&point);
+    void leftRotate(RBTNode<T> *x);
+    void rightRotate(RBTNode<T> *x);
 
 public:
     RBT() : root(nullptr) {}
 
     void insert(const T &);
-    void insert(const T &, RBTNode<T> *&point, RBTNode<T> *parent);
+    void insertFixUp(RBTNode<T> *z);
     void prettyPrint() const { root->prettyPrint(0); }
 
     int height() const { return root->height(); }
 };
 
 template <class T>
-void RBT<T>::doubleCCR(RBTNode<T> *&point) {
-    singleCR(point->right);
-    singleCCR(point);
-}
-
-template <class T>
-void RBT<T>::doubleCR(RBTNode<T> *&point) {
-    singleCCR(point->left);
-    singleCR(point);
-}
-
-template <class T>
-void RBT<T>::singleCR(RBTNode<T> *&point) {
-    RBTNode<T> *grandparent = point;
-    RBTNode<T> *parent = point->left;
-    // TODO: ADD ROTATION CODE HERE
-}
-
-template <class T>
-void RBT<T>::singleCCR(RBTNode<T> *&point) {
-    RBTNode<T> *grandparent = point;
-    RBTNode<T> *parent = point->right;
-    // TODO: ADD ROTATION CODE HERE
-}
-
-template <class T>
-void RBT<T>::insert(const T &toInsert, RBTNode<T> *&point, RBTNode<T> *parent) {
-    if (point == nullptr) {               // leaf location is found so insert node
-        point = new RBTNode<T>(toInsert); // modifies the pointer itself since *point
-        // is passed by reference
-        point->parent = parent;
-
-        RBTNode<T> *curr_node = point; // curr_node will be set appropriately when walking up the tree
-        // TODO: ADD RBT RULES HERE
-    } else if (toInsert < point->data) { // recurse down the tree to left to find correct leaf location
-        insert(toInsert, point->left, point);
-    } else { // recurse down the tree to right to find correct leaf location
-        insert(toInsert, point->right, point);
+void RBT<T>::leftRotate(RBTNode<T> *x) {
+    RBTNode<T> *y = x->right;
+    x->right = y->left;
+    if (y->left != nullptr) {
+        y->left->parent = x;
     }
+    y->parent = x->parent;
+    if (x->parent == nullptr) {
+        root = y;
+    } else if (x == x->parent->left) {
+        x->parent->left = y;
+    } else {
+        x->parent->right = y;
+    }
+    y->left = x;
+    x->parent = y;
+}
+
+template <class T>
+void RBT<T>::rightRotate(RBTNode<T> *x) {
+    RBTNode<T> *y = x->left;
+    x->left = y->right;
+    if (y->right != nullptr) {
+        y->right->parent = x;
+    }
+    y->parent = x->parent;
+    if (x->parent == nullptr) {
+        root = y;
+    } else if (x == x->parent->right) {
+        x->parent->right = y;
+    } else {
+        x->parent->left = y;
+    }
+    y->right = x;
+    x->parent = y;
 }
 
 template <class T>
 void RBT<T>::insert(const T &toInsert) {
-    insert(toInsert, root, nullptr);
+    RBTNode<T> *z = new RBTNode<T>(toInsert);
+    RBTNode<T> *y = nullptr;
+    RBTNode<T> *x = root;
+    while (x != nullptr) {
+        y = x;
+        if (z->data < x->data) {
+            x = x->left;
+        } else {
+            x = x->right;
+        }
+    }
+    z->parent = y;
+    if (y == nullptr) {
+        root = z;
+    } else if (z->data < y->data) {
+        y->left = z;
+    } else {
+        y->right = z;
+    }
+    z->left = nullptr;
+    z->right = nullptr;
+    insertFixUp(z);
+}
+
+template <class T>
+void RBT<T>::insertFixUp(RBTNode<T> *z) {
+    while (getColor(z->parent) == RED) {
+        if (z->parent == z->parent->parent->left) {
+            RBTNode<T> *y = z->parent->parent->right;
+            if (getColor(y) == RED) {
+                z->parent->color = BLACK;
+                y->color = BLACK;
+                z->parent->parent->color = RED;
+                z = z->parent->parent;
+            } else {
+                if (z == z->parent->right) {
+                    z = z->parent;
+                    leftRotate(z);
+                }
+                z->parent->color = BLACK;
+                z->parent->parent->color = RED;
+                rightRotate(z->parent->parent);
+            }
+        } else {
+            RBTNode<T> *y = z->parent->parent->left;
+            if (getColor(y) == RED) {
+                z->parent->color = BLACK;
+                y->color = BLACK;
+                z->parent->parent->color = RED;
+                z = z->parent->parent;
+            } else {
+                if (z == z->parent->left) {
+                    z = z->parent;
+                    rightRotate(z);
+                }
+                z->parent->color = BLACK;
+                z->parent->parent->color = RED;
+                leftRotate(z->parent->parent);
+            }
+        }
+    }
+    root->color = BLACK;
 }
 
 // NOTE: DO NOT MODIFY THE MAIN FUNCTION BELOW

@@ -143,32 +143,32 @@ hw11/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/hw11.dir/build.make CMakeFiles/hw11.dir/build
 .PHONY : hw11/fast
 
-main.o: main.cpp.o
+iko206_hw11.o: iko206_hw11.cpp.o
 
-.PHONY : main.o
+.PHONY : iko206_hw11.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/hw11.dir/build.make CMakeFiles/hw11.dir/main.cpp.o
-.PHONY : main.cpp.o
+iko206_hw11.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hw11.dir/build.make CMakeFiles/hw11.dir/iko206_hw11.cpp.o
+.PHONY : iko206_hw11.cpp.o
 
-main.i: main.cpp.i
+iko206_hw11.i: iko206_hw11.cpp.i
 
-.PHONY : main.i
+.PHONY : iko206_hw11.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/hw11.dir/build.make CMakeFiles/hw11.dir/main.cpp.i
-.PHONY : main.cpp.i
+iko206_hw11.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hw11.dir/build.make CMakeFiles/hw11.dir/iko206_hw11.cpp.i
+.PHONY : iko206_hw11.cpp.i
 
-main.s: main.cpp.s
+iko206_hw11.s: iko206_hw11.cpp.s
 
-.PHONY : main.s
+.PHONY : iko206_hw11.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/hw11.dir/build.make CMakeFiles/hw11.dir/main.cpp.s
-.PHONY : main.cpp.s
+iko206_hw11.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hw11.dir/build.make CMakeFiles/hw11.dir/iko206_hw11.cpp.s
+.PHONY : iko206_hw11.cpp.s
 
 # Help Target
 help:
@@ -179,9 +179,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... hw11"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... iko206_hw11.o"
+	@echo "... iko206_hw11.i"
+	@echo "... iko206_hw11.s"
 .PHONY : help
 
 

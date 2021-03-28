@@ -80,7 +80,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/ikeofoegbu/Dropbox/nyu tandon/bridge/coursework/hw/hw11/hw11/main.cpp">
+		<Unit filename="/Users/ikeofoegbu/Dropbox/nyu tandon/bridge/coursework/hw/hw11/hw11/iko206_hw11.cpp">
 			<Option target="hw11"/>
 		</Unit>
 		<Unit filename="/Users/ikeofoegbu/Dropbox/nyu tandon/bridge/coursework/hw/hw11/hw11/CMakeLists.txt">

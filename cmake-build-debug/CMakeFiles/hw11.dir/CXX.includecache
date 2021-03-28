@@ -6,10 +6,10 @@
 
 #IncludeRegexTransform: 
 
-/Users/ikeofoegbu/Dropbox/nyu tandon/bridge/coursework/hw/hw11/hw11/main.cpp
+/Users/ikeofoegbu/Dropbox/nyu tandon/bridge/coursework/hw/hw11/hw11/iko206_hw11.cpp
 iostream
 -
-math.h
+cmath
 -
 queue
 -
