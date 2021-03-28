@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/ikeofoegbu/Dropbox/nyu tandon/bridge/coursework/hw/hw11/hw11/main.cpp
+iostream
+-
+math.h
+-
+queue
+-
+
